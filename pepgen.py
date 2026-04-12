@@ -1,3 +1,35 @@
+import subprocess
+import sys
+
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package, "-q"])
+
+try:
+    import torch
+except ImportError:
+    install("torch")
+    import torch
+
+try:
+    from transformers import AutoTokenizer, EsmForMaskedLM
+except ImportError:
+    install("transformers")
+    install("sentencepiece")
+    install("accelerate")
+    from transformers import AutoTokenizer, EsmForMaskedLM
+
+try:
+    import pandas as pd
+except ImportError:
+    install("pandas")
+    import pandas as pd
+
+try:
+    import numpy as np
+except ImportError:
+    install("numpy")
+    import numpy as np
+    
 """
 pepgen_core.py
 ==============
